@@ -4,9 +4,23 @@
 
 
     let message = ref(); // int, string, boolean
+
+    // get data from this api https://lab5-p379.onrender.com/api/v1/messages/
     let allMessages = reactive({
-        data: ["Heel", "Even", "Simpel", "Doen"],
+        data: [],
     })
+
+    // after loading page get data from api
+    onMounted(async () => {
+        const response = await fetch("https://lab5-p379.onrender.com/api/v1/messages/");
+        const data = await response.json();
+        data.reverse();
+        allMessages.data = data.slice(0, 8);
+    });
+
+
+   
+
 
     const sendMessage = () => {
         allMessages.data.push(message.value);
