@@ -3,7 +3,7 @@
     import { ref, reactive, onMounted } from 'vue';
 
 
-    let message = ref(); // int, string, boolean
+    let message = ref(""); // int, string, boolean
 
     // get data from this api https://lab5-p379.onrender.com/api/v1/messages/
     let allMessages = reactive({
@@ -21,33 +21,34 @@
     // send message to api https://lab5-p379.onrender.com/api/v1/messages/ and add a user and a message
     const sendMessage = async () => {
     try {
-        const response = await fetch("https://lab5-p379.onrender.com/api/v1/messages/", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                user: 'Jarne',
-                text: message.value,
+      const response = await fetch("https://lab5-p379.onrender.com/api/v1/messages/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user: 'Jarne',
+          text: message.value,
+        }),
+      });
 
-            }),
-        });
+      console.log(response);
 
-        console.log(response); // Log the entire response for debugging
-
+      if (response.ok) {
         const data = await response.json();
-
-        if (response.ok) {
-            console.log(data);
-            allMessages.data.push(data);
-            message.value = "";
-        } else {
-            console.error("Error saving message:", data.message);
-        }
+        const newMessage = {
+          user: 'Jarne',
+          text: message.value,
+        };
+        allMessages.data.unshift(newMessage);
+        message.value = "";
+      } else {
+        console.error("Error saving message:", response.statusText);
+      }
     } catch (error) {
-        console.error("Error:", error);
+      console.error("Error:", error);
     }
-};
+  };
 
    
 
