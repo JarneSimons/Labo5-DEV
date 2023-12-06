@@ -15,7 +15,7 @@
         const response = await fetch("https://lab5-p379.onrender.com/api/v1/messages/");
         const data = await response.json();
         data.reverse();
-        allMessages.data = data.slice(0, 15);
+        allMessages.data = data.slice(0, 12);
     });
 
     // send message to api https://lab5-p379.onrender.com/api/v1/messages/ and add a user and a message
@@ -77,4 +77,16 @@
   font-weight: bold;
   margin-right: 5px;
 }
+
+li {
+  list-style: none;
+  
+}
+
+ul {
+    padding: 0.5em 1em;
+    
+    background-color: #f5f5f5;
+}
+
 </style>
